@@ -1,0 +1,20 @@
+{
+    "header" :
+    {
+        "platform" : "nutekt-digital",
+        "module" : "osc",
+        "api" : "1.1-0",
+        "dev_id" : 0,
+        "prg_id" : 0,
+        "version" : "1.0-0",
+        "name" : "DualOsc",
+        "num_param" : 5,
+        "params" : [
+            ["Wav1", 0, 4, ""],
+            ["Wav2", 0, 4, ""],
+            ["Balance", 0, 100, "%"],
+            ["Detune", -100, 100, "%"],
+            ["Sync", 0, 1, "%"]
+          ]
+    }
+}
