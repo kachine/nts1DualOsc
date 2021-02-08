@@ -60,12 +60,16 @@ void OSC_CYCLE(const user_osc_param_t * const params,
   // Convert LFO range within 0 to 1
   lfo = (lfo + 1.f) * 0.5f;
 
-  // MIDI note# of current process
+  // MIDI note# and pitch modifier of current process
+  // If pitch bend message has already received, note value may be differ from actual MIDI note#
+  // Pitch modifier value takes within 0 to 255, the value indicate 1/255 of semitone
+  // The pitch modifier is always upperward, so downer pitch bend is processed as a combination of note# decrement and adequate upperward pitch modifier.
   uint8_t note = params->pitch >> 8;
+  uint8_t mod = params->pitch & 0xFF;
 
   // Corresponding frequency of the MIDI note#
   // Not only notenumber but also pitchbend and built-in LFO pitch modulation is taken into account
-  float frequency = osc_notehzf(note);
+  float frequency = osc_w0f_for_note(note, mod) * k_samplerate; // osc_notehzf(note) is not suited here, because of pitch bend handling is not enough.
   // Apply detune for osc2
   float osc2_frequency = 0;
   if(VOICE.detune > 0.f){
